@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Farmer App (KisanBook) — शेतकऱ्यांसाठी डिजिटल डायरी | Digital Diary for Farmers</title>
+  <meta name="description" content="Farmer App — पेरणीपासून कापणीपर्यंत प्रत्येक टप्प्याची नोंद, सेंद्रिय प्रमाणपत्र आणि आधुनिक शेती व्यवस्थापन एकाच ठिकाणी.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+      background: #FFFFFF;
+      color: #202124;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a   { color: inherit; text-decoration: none; }
+  </style>
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/images/logo.png" alt="MapFarmer" class="nav-logo-img">
+    </a>
+
+    <div class="nav-links">
+      <a href="#features" data-i18n="features">Features</a>
+      <a href="#how" data-i18n="howItWorks">How it Works</a>
+      <a href="#gallery" data-i18n="gallery">Gallery</a>
+      <a href="#crops" data-i18n="crops">Crops</a>
+    </div>
+
+    <!-- Right Actions: Google Material Trilingual Pill + App CTA -->
+    <div class="nav-actions">
+      <!-- Language Dropdown -->
+      <div class="nav-lang-select-wrap">
+        <svg class="nav-lang-globe" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <select id="nav-lang-select" class="nav-lang-select" aria-label="Select Language" onchange="changeLang(this.value)">
+          <option value="en">English</option>
+          <option value="mr" selected>मराठी</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+        <svg class="nav-lang-caret" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+
+      <a href="pages/login.html" class="btn-nav" data-i18n="openApp">Get Started</a>
+
+      <button class="nav-hamburger" aria-label="Open Navigation Menu" onclick="toggleMenu()" id="btnNavHamburger">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU DRAWER (Google Material 3) -->
+<div class="mobile-menu" id="mobileMenu" onclick="closeMobileMenu(event)" aria-hidden="true">
+  <div class="mobile-menu-panel">
+    <!-- Header -->
+    <div class="mobile-menu-header">
+      <a href="index.html" onclick="toggleMenu()">
+        <img src="assets/images/logo.png" alt="MapFarmer" style="height:44px; width:auto; display:block;">
+      </a>
+      <button class="mobile-menu-close" onclick="toggleMenu()" aria-label="Close menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Language Selector inside Drawer -->
+    <div class="mobile-lang-box">
+      <div class="mobile-lang-title" data-i18n="statLangs">भाषा निवडा / Select Language</div>
+      <div class="app-lang-wrap" style="width:100%; border-radius:12px; padding:8px 14px; background:#F8F9FA;">
+        <svg class="alw-globe" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <select id="mobileLangSelect" aria-label="Select Language" onchange="changeLang(this.value)" style="flex:1; font-size:0.92rem;">
+          <option value="en">English</option>
+          <option value="mr" selected>मराठी</option>
+          <option value="hi">हिन्दी</option>
+        </select>
+        <svg class="alw-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="mobile-menu-links">
+      <a href="#mainNav" class="mobile-nav-link" onclick="toggleMenu()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span data-i18n="home">Home</span>
+      </a>
+      <a href="#features" class="mobile-nav-link" onclick="toggleMenu()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="8" height="8" rx="2"/><rect x="14" y="3" width="8" height="8" rx="2"/><rect x="2" y="13" width="8" height="8" rx="2"/><rect x="14" y="13" width="8" height="8" rx="2"/></svg>
+        <span data-i18n="features">Features</span>
+      </a>
+      <a href="#how" class="mobile-nav-link" onclick="toggleMenu()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span data-i18n="hiwLabel">Workflow (10 Steps)</span>
+      </a>
+      <a href="#gallery" class="mobile-nav-link" onclick="toggleMenu()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span data-i18n="gallery">Photo Gallery</span>
+      </a>
+      <a href="#crops" class="mobile-nav-link" onclick="toggleMenu()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C12 2 4 8 4 15C4 19 7.5 22 12 22C16.5 22 20 19 20 15C20 8 12 2 12 2Z"/></svg>
+        <span data-i18n="crops">Supported Crops</span>
+      </a>
+    </div>
+
+    <!-- Actions at bottom of drawer -->
+    <div class="mobile-menu-actions">
+      <a href="pages/login.html" class="btn-mobile-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span data-i18n="openApp">App उघडा</span>
+      </a>
+      <div class="mobile-auth-row">
+        <a href="pages/login.html" class="btn-mobile-auth">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <span data-i18n="loginBtn">Login</span>
+        </a>
+        <a href="pages/register.html" class="btn-mobile-auth">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+          <span data-i18n="registerHere">Register</span>
+        </a>
+      </div>
+      <div style="text-align:center; margin-top:6px; font-size:0.75rem; color:#9AA0A6;">
+        Toll-Free: <strong style="color:#34A853;">1800-233-0240</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="wrap hero-inner">
+
+    <!-- Left: Copy & Actions -->
+    <div>
+      <div class="hero-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2.2" stroke-linecap="round"><path d="M12 2C12 2 4 8 4 15C4 19 7.5 22 12 22C16.5 22 20 19 20 15C20 8 12 2 12 2Z"/></svg>
+        <span data-i18n="heroEyebrow">शेतकऱ्यांसाठी डिजिटल डायरी</span>
+      </div>
+      <h1 class="hero-title">
+        <span data-i18n="heroTitle">तुमच्या शेतीची संपूर्ण नोंद एका ठिकाणी</span>
+      </h1>
+      <p class="hero-sub" data-i18n="heroSub">
+        Farmer App — पेरणीपासून कापणीपर्यंत प्रत्येक टप्प्याचे फोटो काढा, नोंद ठेवा आणि सेंद्रिय शेतीचे प्रमाण मिळवा.
+      </p>
+      <div class="hero-actions">
+        <a href="pages/login.html" class="landing-btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <span data-i18n="startApp">App सुरू करा</span>
+        </a>
+        <a href="#features" class="btn-outline" data-i18n="learnMore">अधिक जाणून घ्या</a>
+      </div>
+
+      <!-- Stat Badges (Animated Counter) -->
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num" data-target="10">0</div>
+          <div class="hero-stat-label" data-i18n="statSteps">शेती टप्पे</div>
+        </div>
+        <div>
+          <div class="hero-stat-num" data-target="3">0</div>
+          <div class="hero-stat-label" data-i18n="statLangs">भाषा सपोर्ट</div>
+        </div>
+        <div>
+          <div class="hero-stat-num" data-target="100" data-suffix="%">0%</div>
+          <div class="hero-stat-label" data-i18n="statFree">मोफत वापर</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Ultra-Attractive Real Photography Showcase Card (Google Material 3) -->
+    <div class="hero-visual">
+      <!-- Floating Badges -->
+      <div class="badge-float top-left">
+        <span class="badge-dot green"></span>
+        <span data-i18n="badgeOrganic">सेंद्रिय प्रमाणित १००%</span>
+      </div>
+
+      <div class="hero-card-showcase hover-lift">
+        <div class="hero-card-img-wrap">
+          <img
+            src="assets/images/hero-farmer.jpg"
+            alt="Progressive Indian Farmer using digital smart app in lush green field"
+            loading="eager"
+            id="heroMainPhoto"
+          >
+          <div class="hero-card-overlay"></div>
+          
+          <div class="hero-card-footer">
+            <div class="hero-card-caption">
+              <div class="hero-card-caption-title" data-i18n="tagline">शेतकऱ्यांसाठी डिजिटल डायरी</div>
+              <div class="hero-card-caption-sub" data-i18n="badgeCropHealth">उत्कृष्ट पीक गुणवत्ता आणि थेट नोंदणी</div>
+            </div>
+            <div class="hero-card-badge-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#137333" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Verified 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="badge-float bottom-right">
+        <span class="badge-dot orange"></span>
+        <span data-i18n="badgeUploaded">फोटो नोंद सुरक्षित</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <span class="trust-label" data-i18n="trustLabel">मान्यता आणि विश्वास</span>
+    <div class="trust-divider"></div>
+    <div class="trust-badges">
+      <div class="trust-badge">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+        <span data-i18n="trustMaha">महाराष्ट्र शासन</span>
+      </div>
+      <div class="trust-badge">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="1.8" stroke-linecap="round"><path d="M12 2C12 2 4 8 4 15C4 19 7.5 22 12 22C16.5 22 20 19 20 15C20 8 12 2 12 2Z"/><path d="M9 14l2 2 4-4"/></svg>
+        <span data-i18n="trustOrganic">सेंद्रिय कृषी मंडळ</span>
+      </div>
+      <div class="trust-badge">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
+        <span data-i18n="trustMobile">मोबाइल सुलभ डिझाईन</span>
+      </div>
+      <div class="trust-badge">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span data-i18n="trustSecurity">१००% सुरक्षित शेतकरी डेटा</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES SECTION -->
+<section class="features" id="features">
+  <div class="wrap">
+    <span class="section-label reveal" data-i18n="featSectionLabel">Features</span>
+    <h2 class="section-title reveal" data-i18n="featSectionTitle">शेतकऱ्यांसाठी बनवलेले खास तंत्रज्ञान</h2>
+    <p class="section-sub reveal" data-i18n="featSectionSub">सहज वापर, स्थानिक भाषा, आणि संपूर्ण शेती प्रक्रियेची नोंद — सगळं एकाच App मध्ये.</p>
+    
+    <div class="feat-grid stagger-children">
+
+      <div class="feat-card reveal" data-delay="1">
+        <div class="feat-icon-wrap gold">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F57F17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="1.5" fill="#F57F17"/>
+          </svg>
+        </div>
+        <div class="feat-title" data-i18n="feat1Title">फोटो नोंदणी</div>
+        <p class="feat-body" data-i18n="feat1Body">प्रत्येक शेती टप्प्याचे फोटो काढा — नांगरणीपासून सोंगण्यापर्यंत. कॅमेरा किंवा गॅलरी वापरून थेट अपलोड करा.</p>
+      </div>
+
+      <div class="feat-card reveal" data-delay="2">
+        <div class="feat-icon-wrap green">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round">
+            <path d="M12 2C12 2 4 8 4 15C4 19 7.5 22 12 22C16.5 22 20 19 20 15C20 8 12 2 12 2Z"/><path d="M9 14l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="feat-title" data-i18n="feat2Title">सेंद्रिय प्रमाणपत्र</div>
+        <p class="feat-body" data-i18n="feat2Body">१० टप्प्यांच्या पूर्ण नोंदीवरून सेंद्रिय शेती प्रमाण मिळवण्यास मदत. ग्राहकांचा विश्वास वाढवा.</p>
+      </div>
+
+      <div class="feat-card reveal" data-delay="3">
+        <div class="feat-icon-wrap coral">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+          </svg>
+        </div>
+        <div class="feat-title" data-i18n="feat3Title">३ भाषा सपोर्ट</div>
+        <p class="feat-body" data-i18n="feat3Body">मराठी, हिंदी आणि इंग्रजी — तुमच्या आवडीच्या भाषेत वापरा. भाषा बदलणे अतिशय सोपे आहे.</p>
+      </div>
+
+      <div class="feat-card reveal" data-delay="4">
+        <div class="feat-icon-wrap earth">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="8" r="4"/><path d="M3 20c0-3.3 2.7-6 6-6"/><circle cx="17" cy="10" r="3"/><path d="M21 20c0-2.5-1.8-4.5-4-4.5"/>
+          </svg>
+        </div>
+        <div class="feat-title" data-i18n="feat4Title">शेतकरी व अधिकारी</div>
+        <p class="feat-body" data-i18n="feat4Body">शेतकरी आणि अधिकारी दोघेही वेगळ्या Account ने Login करू शकतात. प्रत्येकाला योग्य माहिती.</p>
+      </div>
+
+      <div class="feat-card reveal" data-delay="5">
+        <div class="feat-icon-wrap sky">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+        </div>
+        <div class="feat-title" data-i18n="feat5Title">Aadhaar Login</div>
+        <p class="feat-body" data-i18n="feat5Body">OTP द्वारे सुरक्षित Login. Aadhaar नंबर वापरून रजिस्ट्रेशन — कोणत्याही password ची गरज नाही.</p>
+      </div>
+
+      <div class="feat-card reveal" data-delay="6">
+        <div class="feat-icon-wrap lime">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#558B2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="feat-title" data-i18n="feat6Title">Snake View ट्रॅकर</div>
+        <p class="feat-body" data-i18n="feat6Body">सर्व १० टप्पे एका सुंदर नकाशाप्रमाणे पहा. कोणता टप्पा पूर्ण झाला ते रंगाने लगेच कळते.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Stripe separator -->
+<div class="section-stripe"></div>
+
+<!-- HOW IT WORKS / WORKFLOW SECTION -->
+<section class="hiw" id="how">
+  <div class="hiw-pattern"></div>
+  <div class="hiw-glow-orb"></div>
+  <div class="wrap">
+    <div style="text-align: center;">
+      <span class="section-label reveal" data-i18n="hiwLabel">Workflow</span>
+    </div>
+    <h2 class="section-title reveal" data-i18n="hiwTitle">10 Simple Steps to Complete Verification</h2>
+    <p class="section-sub reveal" data-i18n="hiwSub">Photograph every crucial agricultural milestone and securely archive it on the Farmer App cloud.</p>
+    
+    <div class="workflow-grid" id="stepsGridContainer">
+      <!-- 01: Plowing -->
+      <div class="workflow-card reveal" data-delay="1">
+        <div class="wf-card-media">
+          <img src="assets/images/step-plowing.jpg" alt="Plowing" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">01</div>
+          <div class="wf-emoji-badge">🐂</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName1">Plowing</h3>
+          <p class="wf-card-desc" id="stepDesc1">Capture field plowing photo</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02: Planting -->
+      <div class="workflow-card reveal" data-delay="2">
+        <div class="wf-card-media">
+          <img src="assets/images/step-planting.jpg" alt="Planting" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">02</div>
+          <div class="wf-emoji-badge">🚜</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName2">Planting</h3>
+          <p class="wf-card-desc" id="stepDesc2">Record plant sapling placement</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03: Sowing -->
+      <div class="workflow-card reveal" data-delay="3">
+        <div class="wf-card-media">
+          <img src="assets/images/step-sowing.jpg" alt="Sowing" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">03</div>
+          <div class="wf-emoji-badge">🌱</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName3">Sowing</h3>
+          <p class="wf-card-desc" id="stepDesc3">Document seed sowing stage</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04: Fertilizer -->
+      <div class="workflow-card reveal" data-delay="4">
+        <div class="wf-card-media">
+          <img src="assets/images/organic-harvest.jpg" alt="Fertilizer" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">04</div>
+          <div class="wf-emoji-badge">🌿</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName4">Fertilizer</h3>
+          <p class="wf-card-desc" id="stepDesc4">Log organic fertilizer application</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05: Weedicide -->
+      <div class="workflow-card reveal" data-delay="5">
+        <div class="wf-card-media">
+          <img src="assets/images/hero-farmer.jpg" alt="Weedicide" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">05</div>
+          <div class="wf-emoji-badge">💨</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName5">Weedicide</h3>
+          <p class="wf-card-desc" id="stepDesc5">Proof of weed control spraying</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06: Furrow Making -->
+      <div class="workflow-card reveal" data-delay="6">
+        <div class="wf-card-media">
+          <img src="assets/images/tractor-plowing.jpg" alt="Furrow Making" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">06</div>
+          <div class="wf-emoji-badge">🏗️</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName6">Furrow Making</h3>
+          <p class="wf-card-desc" id="stepDesc6">Record ridge and furrow shaping</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 07: Irrigation -->
+      <div class="workflow-card reveal" data-delay="7">
+        <div class="wf-card-media">
+          <img src="assets/images/step-irrigation.jpg" alt="Irrigation" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">07</div>
+          <div class="wf-emoji-badge">💦</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName7">Irrigation</h3>
+          <p class="wf-card-desc" id="stepDesc7">Document field water irrigation</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 08: Weeding -->
+      <div class="workflow-card reveal" data-delay="8">
+        <div class="wf-card-media">
+          <img src="assets/images/step-planting.jpg" alt="Weeding" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">08</div>
+          <div class="wf-emoji-badge">🌾</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName8">Weeding</h3>
+          <p class="wf-card-desc" id="stepDesc8">Weed removal photo log</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 09: Harvesting -->
+      <div class="workflow-card reveal" data-delay="9">
+        <div class="wf-card-media">
+          <img src="assets/images/wheat-harvest.jpg" alt="Harvesting" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">09</div>
+          <div class="wf-emoji-badge">🌾</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName9">Harvesting</h3>
+          <p class="wf-card-desc" id="stepDesc9">Documenting crop harvest yield</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10: Threshing & Storage -->
+      <div class="workflow-card reveal" data-delay="10">
+        <div class="wf-card-media">
+          <img src="assets/images/hero-farmer.jpg" alt="Threshing & Storage" class="wf-card-img" loading="lazy">
+          <div class="wf-card-overlay"></div>
+          <div class="wf-step-pill">10</div>
+          <div class="wf-emoji-badge">🪨</div>
+        </div>
+        <div class="wf-card-content">
+          <h3 class="wf-card-title" id="stepName10">Threshing & Storage</h3>
+          <p class="wf-card-desc" id="stepDesc10">Grain threshing and grain storage</p>
+          <div class="wf-card-footer">
+            <span class="wf-verified-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Cloud Archive
+            </span>
+            <span class="wf-step-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CROPS -->
+<section class="crops" id="crops">
+  <div class="wrap">
+    <span class="section-label reveal" data-i18n="cropsLabel">Crops</span>
+    <h2 class="section-title reveal" data-i18n="cropsTitle">सर्व प्रकारच्या पिकांसाठी उपयुक्त</h2>
+    <p class="section-sub reveal" data-i18n="cropsSub">महाराष्ट्रातील आणि भारतातील कोणत्याही पिकाची नोंद Farmer App मध्ये सहज ठेवता येते.</p>
+    <div class="crops-row">
+      <div class="crop-chip reveal" data-delay="1"><span class="crop-dot" style="background:#F9A825"></span><span data-i18n="cropWheat">गहू</span></div>
+      <div class="crop-chip reveal" data-delay="2"><span class="crop-dot" style="background:#FDD835"></span><span data-i18n="cropCorn">मका</span></div>
+      <div class="crop-chip reveal" data-delay="3"><span class="crop-dot" style="background:#E53935"></span><span data-i18n="cropTomato">टोमॅटो</span></div>
+      <div class="crop-chip reveal" data-delay="4"><span class="crop-dot" style="background:#8E24AA"></span><span data-i18n="cropOnion">कांदा</span></div>
+      <div class="crop-chip reveal" data-delay="5"><span class="crop-dot" style="background:#F57F17"></span><span data-i18n="cropPeanut">शेंगदाणे</span></div>
+      <div class="crop-chip reveal" data-delay="6"><span class="crop-dot" style="background:#7CB342"></span><span data-i18n="cropSoybean">सोयाबीन</span></div>
+      <div class="crop-chip reveal" data-delay="7"><span class="crop-dot" style="background:#FBC02D"></span><span data-i18n="cropSunflower">सूर्यफूल</span></div>
+      <div class="crop-chip reveal" data-delay="8"><span class="crop-dot" style="background:#6A1B9A"></span><span data-i18n="cropGrapes">द्राक्षे</span></div>
+      <div class="crop-chip reveal" data-delay="9"><span class="crop-dot" style="background:#2E7D32"></span><span data-i18n="cropSpinach">पालक</span></div>
+      <div class="crop-chip reveal" data-delay="10"><span class="crop-dot" style="background:#C62828"></span><span data-i18n="cropChilli">मिरची</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FARM PHOTO GALLERY -->
+<section class="farm-gallery" id="gallery">
+  <div class="wrap">
+    <span class="section-label reveal" data-i18n="galleryLabel">Real Photos</span>
+    <h2 class="section-title reveal" data-i18n="galleryTitle">शेताचे खरे क्षण आणि नोंदी</h2>
+    <p class="section-sub reveal" data-i18n="gallerySub">Farmer App वापरणाऱ्या शेतकऱ्यांनी प्रत्यक्ष शेतात काढलेल्या नोंदी — सेंद्रिय शेतीचा प्रत्येक टप्पा.</p>
+
+    <!-- Desktop Mosaic Grid with Generated High-Def Images -->
+    <div class="gallery-mosaic">
+
+      <!-- Tall Left: Golden Wheat Field Ready For Harvesting -->
+      <div class="gal-tall">
+        <div class="gal-cell">
+          <img
+            src="assets/images/wheat-harvest.jpg"
+            alt="Golden wheat field harvest ready"
+            loading="lazy"
+          >
+          <div class="gal-overlay"></div>
+          <div class="gal-label" data-i18n="galWheat">सोनेरी गहू शेती — कापणी</div>
+        </div>
+      </div>
+
+      <!-- Col 2, row 1: Progressive Indian Farmer -->
+      <div class="gal-cell">
+        <img
+          src="assets/images/hero-farmer.jpg"
+          alt="Progressive Indian farmer with digital diary"
+          loading="lazy"
+        >
+        <div class="gal-overlay"></div>
+        <div class="gal-label" data-i18n="galFarmer">प्रगतीशील शेतकरी — कार्यमग्न</div>
+      </div>
+
+      <!-- Col 2, row 2: Certified Organic Vegetable Harvest -->
+      <div class="gal-cell">
+        <img
+          src="assets/images/organic-harvest.jpg"
+          alt="Fresh organic vegetables harvest with certified tag"
+          loading="lazy"
+        >
+        <div class="gal-overlay"></div>
+        <div class="gal-label" data-i18n="galVeg">सेंद्रिय भाज्या — ताजे उत्पादन</div>
+      </div>
+
+      <!-- Col 3, row 1: Modern Tractor Field Plowing -->
+      <div class="gal-cell">
+        <img
+          src="assets/images/tractor-plowing.jpg"
+          alt="Tractor plowing dark soil rows"
+          loading="lazy"
+        >
+        <div class="gal-overlay"></div>
+        <div class="gal-label" data-i18n="galTractor">नांगरणी — ट्रॅक्टर शेतात</div>
+      </div>
+
+      <!-- Col 3, row 2: Lush Green Rolling Crop Fields -->
+      <div class="gal-cell">
+        <img
+          src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&w=600&q=80"
+          alt="Lush green fields"
+          loading="lazy"
+        >
+        <div class="gal-overlay"></div>
+        <div class="gal-label" data-i18n="galGreen">हरित शेत — हंगाम प्रारंभ</div>
+      </div>
+
+    </div>
+
+    <!-- Mobile Horizontal Touch Scroll with Generated Images -->
+    <div class="gallery-scroll">
+      <div class="gal-scroll-card">
+        <img src="assets/images/wheat-harvest.jpg" alt="गहू शेती" loading="lazy">
+        <span data-i18n="cropWheat">गहू शेती</span>
+      </div>
+      <div class="gal-scroll-card">
+        <img src="assets/images/hero-farmer.jpg" alt="शेतकरी" loading="lazy">
+        <span data-i18n="galFarmer">शेतकरी</span>
+      </div>
+      <div class="gal-scroll-card">
+        <img src="assets/images/organic-harvest.jpg" alt="भाज्या" loading="lazy">
+        <span data-i18n="galVeg">सेंद्रिय उत्पादन</span>
+      </div>
+      <div class="gal-scroll-card">
+        <img src="assets/images/tractor-plowing.jpg" alt="ट्रॅक्टर" loading="lazy">
+        <span data-i18n="galTractor">नांगरणी</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHOTO EVIDENCE: Step-by-step real shots -->
+<section class="photo-evidence">
+  <div class="wrap">
+    <span class="section-label reveal" data-i18n="evidenceLabel">Step Evidence</span>
+    <h2 class="section-title reveal" data-i18n="evidenceTitle">प्रत्येक टप्प्याचे डिजिटल पुरावे</h2>
+    <p class="section-sub reveal" data-i18n="evidenceSub">Farmer App मध्ये प्रत्येक शेती टप्प्याचा फोटो जतन करा — हे तुमच्या सेंद्रिय प्रमाणपत्राचा आधार आहे.</p>
+
+    <div class="evidence-strip">
+
+      <div class="ev-card">
+        <div class="ev-card-photo">
+          <img src="assets/images/tractor-plowing.jpg" alt="नांगरणी" loading="lazy">
+          <span class="ev-card-step">Step 01</span>
+        </div>
+        <div class="ev-card-body">
+          <div class="ev-card-title" id="evCardTitle1">नांगरणी</div>
+          <div class="ev-card-desc" data-i18n="evStep01Desc">शेत नांगरण्याचा फोटो काढून अपलोड करा</div>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card-photo">
+          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=520&q=80" alt="लागवड" loading="lazy">
+          <span class="ev-card-step">Step 02</span>
+        </div>
+        <div class="ev-card-body">
+          <div class="ev-card-title" id="evCardTitle2">लागवड</div>
+          <div class="ev-card-desc" data-i18n="evStep02Desc">रोप लावण्याची नोंद फोटोसह जतन करा</div>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card-photo">
+          <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=520&q=80" alt="पेरणी" loading="lazy">
+          <span class="ev-card-step">Step 03</span>
+        </div>
+        <div class="ev-card-body">
+          <div class="ev-card-title" id="evCardTitle3">पेरणी</div>
+          <div class="ev-card-desc" data-i18n="evStep03Desc">बियाणे पेरण्याचे दस्तऐवज तयार करा</div>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card-photo">
+          <img src="assets/images/organic-harvest.jpg" alt="सेंद्रिय खत" loading="lazy">
+          <span class="ev-card-step">Step 04</span>
+        </div>
+        <div class="ev-card-body">
+          <div class="ev-card-title" id="evCardTitle4">सेंद्रिय खत</div>
+          <div class="ev-card-desc" data-i18n="evStep04Desc">खत वापराचा पुरावा फोटोसह जपा</div>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card-photo">
+          <img src="assets/images/wheat-harvest.jpg" alt="कापणी" loading="lazy">
+          <span class="ev-card-step">Step 09</span>
+        </div>
+        <div class="ev-card-body">
+          <div class="ev-card-title" id="evCardTitle9">कापणी</div>
+          <div class="ev-card-desc" data-i18n="evStep09Desc">पीक कापणीचे फोटो सेंद्रिय प्रमाणासाठी</div>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card-photo">
+          <img src="assets/images/hero-farmer.jpg" alt="सोंगणे" loading="lazy">
+          <span class="ev-card-step">Step 10</span>
+        </div>
+        <div class="ev-card-body">
+          <div class="ev-card-title" id="evCardTitle10">सोंगणे</div>
+          <div class="ev-card-desc" data-i18n="evStep10Desc">मळणी आणि साठवण — अंतिम टप्पा</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CALL TO ACTION (CTA) -->
+<section class="cta-section">
+  <div class="wrap">
+    <div class="cta-box reveal from-scale">
+      <div class="cta-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span data-i18n="ctaBadge">आजच सुरुवात करा</span>
+      </div>
+      <h2 class="cta-title" data-i18n="ctaTitle">तुमची शेती डिजिटल करा — पूर्णपणे मोफत!</h2>
+      <p class="cta-sub" data-i18n="ctaSub">Farmer App उघडा, Aadhaar ने Register करा आणि पहिला शेती फोटो काढा.</p>
+      <a href="pages/login.html" class="btn-cta">
+        <span data-i18n="openApp">App उघडा</span>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FULL DETAILED FOOTER -->
+<footer class="site-footer">
+
+  <!-- Wave separator -->
+  <div class="footer-wave">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 60L60 52C120 44 240 28 360 22C480 16 600 20 720 26C840 32 960 38 1080 36C1200 33 1320 22 1380 16.5L1440 11V0H0V60Z" fill="#202124"/>
+    </svg>
+  </div>
+
+  <div class="footer-body">
+    <div class="footer-grid wrap">
+
+      <!-- Col 1: Brand -->
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo-link">
+          <img src="assets/images/logo.png" alt="MapFarmer" class="footer-logo-img">
+        </a>
+        <p class="footer-tagline" data-i18n="heroSub">शेतकऱ्यांसाठी डिजिटल डायरी — पेरणीपासून कापणीपर्यंत प्रत्येक टप्प्याची नोंद, सेंद्रिय प्रमाणपत्र आणि आधुनिक शेती व्यवस्थापन एकाच ठिकाणी.</p>
+        <div class="footer-social">
+          <a href="#" class="footer-social-btn" aria-label="Facebook">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="Twitter/X">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="YouTube">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+          </a>
+        </div>
+        <div class="footer-trust-badges">
+          <div class="footer-trust-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#81C784" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Government Approved</span>
+          </div>
+          <div class="footer-trust-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#81C784" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>100% Free to Use</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 2: Workflow Steps -->
+      <div class="footer-col">
+        <h4 class="footer-col-title" data-i18n="hiwLabel">Workflow Steps</h4>
+        <ul class="footer-links-list">
+          <li><a href="#how">01. Plowing (नांगरणी)</a></li>
+          <li><a href="#how">02. Planting (लागवड)</a></li>
+          <li><a href="#how">03. Sowing (पेरणी)</a></li>
+          <li><a href="#how">04. Fertilizer (खत)</a></li>
+          <li><a href="#how">07. Irrigation (सिंचन)</a></li>
+          <li><a href="#how">09. Harvesting (कापणी)</a></li>
+          <li><a href="#how">10. Storage (साठवण)</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: App Pages -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">App Pages</h4>
+        <ul class="footer-links-list">
+          <li><a href="pages/login.html" data-i18n="loginTitle">Login / Sign In</a></li>
+          <li><a href="pages/register.html" data-i18n="registerTitle">New Registration</a></li>
+          <li><a href="pages/home.html">Farmer Dashboard</a></li>
+          <li><a href="pages/instructions.html">Instructions</a></li>
+          <li><a href="pages/view.html">View All 10 Steps</a></li>
+          <li><a href="pages/capture.html">Upload Stage Photo</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Contact & Helpdesk -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Farmer Helpdesk</h4>
+        <ul class="footer-contact-list">
+          <li>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#81C784" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Maharashtra, India</span>
+          </li>
+          <li>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#81C784" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>help@mapfarmer.in</span>
+          </li>
+          <li>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#81C784" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>1800-233-0240 (Toll Free 24x7)</span>
+          </li>
+          <li>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#81C784" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>मराठी &nbsp;|&nbsp; हिंदी &nbsp;|&nbsp; English</span>
+          </li>
+        </ul>
+        <!-- App Download CTA -->
+        <a href="pages/login.html" class="footer-app-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <span data-i18n="openApp">App उघडा</span> — Free
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Footer Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner wrap">
+        <div class="footer-copy">&copy; 2026 MapFarmer / KisanBook. सर्व हक्क सुरक्षित.</div>
+        <div class="footer-policy-links">
+          <a href="#">Privacy Policy</a>
+          <span class="footer-dot">&middot;</span>
+          <a href="#">Terms of Use</a>
+          <span class="footer-dot">&middot;</span>
+          <a href="#">Sitemap</a>
+        </div>
+        <div class="footer-made">Made with care for Indian Farmers</div>
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+<!-- Back to Top Button -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- Scroll Progress Bar -->
+<div id="scrollProgress"></div>
+
+<!-- Google Material Toast container -->
+<div id="toast" class="google-toast"></div>
+
+<!-- Core Scripts -->
+<script src="js/config.js"></script>
+<script src="js/state.js"></script>
+<script src="js/utils.js"></script>
+
+<script>
+(function() {
+  // Mobile menu toggle
+  window.toggleMenu = function() {
+    var menu = document.getElementById('mobileMenu');
+    if (menu) {
+      var isActive = menu.classList.toggle('active');
+      menu.setAttribute('aria-hidden', !isActive);
+      document.body.style.overflow = isActive ? 'hidden' : '';
+    }
+  };
+  window.closeMobileMenu = function(e) {
+    if (e.target === e.currentTarget) toggleMenu();
+  };
+
+  // Sticky nav shadow
+  var nav = document.getElementById('mainNav');
+  var scrollProgress = document.getElementById('scrollProgress');
+  var backToTop = document.getElementById('backToTop');
+
+  window.addEventListener('scroll', function() {
+    var sy = window.scrollY;
+    if (nav) nav.classList.toggle('scrolled', sy > 8);
+
+    // Scroll progress bar
+    if (scrollProgress) {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      scrollProgress.style.width = (h > 0 ? (sy / h * 100) : 0) + '%';
+    }
+
+    // Back to top visibility
+    if (backToTop) backToTop.classList.toggle('visible', sy > 500);
+  }, { passive: true });
+
+  // Scroll reveal animation
+  // Scroll reveal animation (immediate on mobile, observer on desktop)
+  function initReveals() {
+    var isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+      document.querySelectorAll('.stagger-children').forEach(function(el) { el.classList.add('visible'); });
+    } else {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -36px 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+
+      var staggerIo = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('visible'); staggerIo.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.stagger-children').forEach(function(el) { staggerIo.observe(el); });
+    }
+  }
+  initReveals();
+  window.addEventListener('resize', initReveals);
+
+  // Stat counter animation
+  document.querySelectorAll('.hero-stat-num[data-target]').forEach(function(el) {
+    var target = parseInt(el.dataset.target, 10);
+    var suffix = el.dataset.suffix || '';
+    var done = false;
+
+    function runCounter() {
+      if (done) return;
+      done = true;
+      var start = null;
+      var dur = 1000;
+      requestAnimationFrame(function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * ease) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      });
+    }
+
+    if (window.innerWidth <= 768) {
+      runCounter();
+    } else {
+      var statIo = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          runCounter();
+          statIo.unobserve(el);
+        }
+      }, { threshold: 0.5 });
+      statIo.observe(el);
+    }
+  });
+
+  // Smooth scroll helper
+  window.smoothTo = function(e, id) {
+    var el = document.getElementById(id);
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  };
+
+  // Dynamic step translator on language change
+  function updateStepNames(lang) {
+    var currentLang = lang || state.lang || 'mr';
+    STEPS.forEach(function(s, idx) {
+      var i = idx + 1;
+      var nameEl = document.getElementById('stepName' + i);
+      var descEl = document.getElementById('stepDesc' + i);
+      if (nameEl) nameEl.textContent = s[currentLang] || s.mr;
+      if (descEl) descEl.textContent = s['desc_' + currentLang] || s.desc_mr;
+
+      var evName = document.getElementById('evCardTitle' + i);
+      if (evName) evName.textContent = s[currentLang] || s.mr;
+    });
+  }
+
+  // Initial step translation
+  updateStepNames(state.lang);
+
+  // Listen to language switch events
+  window.addEventListener('languageChanged', function(e) {
+    updateStepNames(e.detail.lang);
+    // Keep nav dropdown in sync
+    var sel = document.getElementById('nav-lang-select');
+    if (sel) sel.value = e.detail.lang;
+  });
+
+  // Set initial value of nav dropdown from state
+  (function() {
+    var sel = document.getElementById('nav-lang-select');
+    if (sel) sel.value = state.lang || 'mr';
+  })();
+})();
+</script>
+</body>
+</html>

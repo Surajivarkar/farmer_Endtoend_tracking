@@ -1,0 +1,556 @@
+/* ============================================================
+   FARMER APP — Shared UI Components (Vibrant)
+   ============================================================ */
+
+/* ── App Shell — full website, no mobile-only constraint ── */
+#app {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Primary Button (Orange — high energy CTA) ── */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, #FB923C 50%, var(--accent) 100%);
+  background-size: 200% 200%;
+  color: #fff;
+  border-radius: var(--radius-full);
+  padding: 14px 40px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font-ui);
+  letter-spacing: 0.3px;
+  box-shadow: var(--shadow-orange);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-position 0.4s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 35px -5px rgba(249,115,22,0.45);
+  background-position: 100% 0;
+}
+
+.btn-primary:active {
+  transform: scale(0.97) translateY(0);
+  box-shadow: 0 4px 12px rgba(249,115,22,0.3);
+}
+
+/* ── Green Button variant ── */
+.btn-green {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff;
+  border-radius: var(--radius-full);
+  padding: 14px 40px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font-ui);
+  box-shadow: var(--shadow-green);
+  transition: transform 0.15s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-green:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 35px -5px rgba(5,150,105,0.4);
+}
+
+/* ── Secondary Button ── */
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 12px 32px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-pale);
+  box-shadow: var(--shadow-green);
+}
+
+/* ── Back Button ── */
+.btn-back {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.btn-back:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-back:active {
+  transform: scale(0.93);
+  background: var(--primary-pale);
+}
+
+/* ── Icon Button ── */
+.btn-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.btn-icon:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-pale);
+  box-shadow: var(--shadow-green);
+}
+
+.btn-icon:active { transform: scale(0.93); }
+
+/* ── Form Input ── */
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  font-size: 0.95rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: var(--font-ui);
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(5,150,105,0.12);
+}
+
+.form-input::placeholder { color: var(--text-muted); }
+
+/* ── Form Select ── */
+.form-select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  font-size: 0.95rem;
+  color: var(--text);
+  outline: none;
+  appearance: none;
+  font-family: var(--font-ui);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23059669' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 22px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(5,150,105,0.12);
+}
+
+/* ── Form Label ── */
+.form-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-family: var(--font-ui);
+}
+
+.form-group { margin-bottom: 14px; }
+
+/* ── Card ── */
+.card {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+  transition: box-shadow 0.3s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── App Header (vibrant green gradient) ── */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-deep) 0%, var(--primary) 60%, var(--primary-light) 100%);
+  padding: max(18px, env(safe-area-inset-top, 0px))
+           max(16px, env(safe-area-inset-right, 0px))
+           22px
+           max(16px, env(safe-area-inset-left, 0px));
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-green);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-header::after {
+  content: '';
+  position: absolute;
+  top: -50%; right: -20%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.app-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+
+.app-header-logo svg { width: 34px; height: 34px; }
+
+.app-header-title {
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: var(--font-ui);
+  letter-spacing: 0.5px;
+}
+
+/* ── Bottom Nav ── */
+.bottom-nav {
+  position: sticky;
+  bottom: 0;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 0 max(6px, env(safe-area-inset-bottom, 0px));
+  z-index: 100;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--text-muted);
+  transition: color 0.2s, transform 0.15s;
+  padding: 8px 24px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-item.active {
+  color: var(--primary);
+  position: relative;
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 20px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.nav-item:hover { color: var(--primary); }
+
+.nav-item span {
+  font-size: 0.65rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+}
+
+/* ── Language Switcher ── */
+.lang-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-label {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.lang-select {
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  color: #fff;
+  border-radius: var(--radius-full);
+  padding: 5px 28px 5px 12px;
+  font-size: 0.78rem;
+  appearance: none;
+  backdrop-filter: blur(4px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 18px;
+  outline: none;
+  cursor: pointer;
+}
+
+.lang-select option { background: var(--primary-deep); color: #fff; }
+
+/* ── Toast ── */
+#toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  z-index: 999;
+  display: none;
+  white-space: nowrap;
+  box-shadow: var(--shadow-green);
+}
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge-accent {
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  border: 1px solid rgba(249,115,22,0.2);
+}
+
+.badge-green {
+  background: var(--primary-pale);
+  color: var(--primary-dark);
+  border: 1px solid rgba(5,150,105,0.2);
+}
+
+.badge-golden {
+  background: var(--golden-light);
+  color: #92400E;
+  border: 1px solid rgba(245,158,11,0.2);
+}
+
+/* ── Hover Lift ── */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============================================================
+   GOOGLE MATERIAL 3 LANGUAGE SWITCHER PILL
+   ============================================================ */
+.lang-switcher-pill {
+  display: inline-flex;
+  align-items: center;
+  background: #F1F3F4;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid #E8EAED;
+  gap: 2px;
+  position: relative;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(60,64,67,0.06);
+}
+
+.lang-switcher-pill .lang-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 8px;
+  padding-right: 4px;
+  color: #5F6368;
+}
+
+.lang-pill-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  color: #5F6368;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.lang-pill-btn:hover:not(.active) {
+  color: #202124;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.lang-pill-btn.active {
+  background: linear-gradient(130deg, #1557C9 0%, #1A73E8 45%, #34A853 100%);
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.38);
+  font-weight: 700;
+}
+
+/* ── Google Material Toast ── */
+.google-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #202124;
+  color: #FFFFFF;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  font-family: var(--font-ui);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.google-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.google-toast.success {
+  background: #137333;
+  color: #FFFFFF;
+  box-shadow: 0 6px 20px rgba(19, 115, 51, 0.35);
+}
+
+.google-toast.error {
+  background: #D93025;
+  color: #FFFFFF;
+}
+
+/* ============================================================
+   APP LANGUAGE DROPDOWN — replaces pill on all inner pages
+   ============================================================ */
+.app-lang-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #F1F3F4;
+  border: 1.5px solid #E8EAED;
+  border-radius: 999px;
+  padding: 5px 10px 5px 9px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.app-lang-wrap:focus-within {
+  border-color: #1A73E8;
+  box-shadow: 0 0 0 3px rgba(26,115,232,0.12);
+}
+
+.app-lang-wrap .alw-globe {
+  color: #5F6368;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.app-lang-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-ui, 'Poppins', sans-serif);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #202124;
+  cursor: pointer;
+  padding-right: 2px;
+  min-width: 70px;
+}
+
+.app-lang-wrap select option {
+  background: #FFFFFF;
+  color: #202124;
+  font-weight: 500;
+}
+
+.app-lang-wrap .alw-caret {
+  color: #5F6368;
+  flex-shrink: 0;
+  pointer-events: none;
+}

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ShhetKari — फोटो घ्या</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+      background: #F8F9FA;
+      color: #202124;
+      min-height: 100vh;
+    }
+
+    /* ── Top Navigation ── */
+    .top-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 64px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1.5px solid #E8EAED;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 14px;
+      z-index: 100;
+    }
+
+    .nav-back {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5F6368;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .nav-back:hover { background: #F1F3F4; color: #202124; }
+
+    .nav-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #202124;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-progress-text {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #34A853;
+      font-family: 'Poppins', sans-serif;
+      flex-shrink: 0;
+    }
+
+    /* ── Progress bar under nav ── */
+    .nav-progress-bar {
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      height: 3px;
+      background: #E8EAED;
+      z-index: 99;
+    }
+
+    .nav-progress-fill {
+      height: 100%;
+      background: #34A853;
+      border-radius: 0 2px 2px 0;
+      transition: width 0.4s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    @media (max-width: 640px) {
+      .top-nav { padding: 0 10px; height: 54px; gap: 6px; }
+      .nav-title { font-size: 0.82rem; }
+      .nav-back { width: 36px; height: 36px; }
+      .app-lang-wrap { padding: 4px 8px; }
+      .app-lang-wrap select { min-width: 54px; font-size: 0.78rem; }
+      .nav-progress-bar { top: 54px; }
+    }
+
+    /* ── Page Layout ── */
+    .page-body {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 84px 20px 40px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    /* ── Step Card ── */
+    .step-card {
+      background: #fff;
+      border: 1.5px solid #E8EAED;
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    /* ── Step Header ── */
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-number-chip {
+      background: linear-gradient(130deg, #1557C9 0%, #1A73E8 45%, #34A853 100%);
+      color: #fff;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(26,115,232,0.25);
+    }
+
+    .step-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #202124;
+      flex: 1;
+    }
+
+    /* ── Image box ── */
+    .img-box {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: #F8F9FA;
+      border: 1.5px solid #E8EAED;
+      position: relative;
+      touch-action: pan-y;
+      cursor: zoom-in;
+    }
+
+    .img-box img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .placeholder-icon {
+      width: 64px; height: 64px;
+      background: #E8EAED;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .placeholder-text {
+      font-size: 0.85rem;
+      color: #9AA0A6;
+      font-weight: 500;
+    }
+
+    /* ── Action buttons ── */
+    .action-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .action-btn {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1.5px solid #E8EAED;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5F6368;
+      transition: all 0.15s;
+    }
+
+    .action-btn:hover {
+      border-color: #34A853;
+      color: #34A853;
+      background: #E8F5E9;
+    }
+
+    .action-btn:active { transform: scale(0.93); }
+
+    /* Camera FAB */
+    .camera-fab {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1557C9 0%, #1A73E8 45%, #34A853 100%);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: box-shadow 0.15s, transform 0.1s;
+      box-shadow: 0 4px 18px rgba(26,115,232,0.42);
+      flex-shrink: 0;
+    }
+
+    .camera-fab:hover {
+      box-shadow: 0 8px 28px rgba(26,115,232,0.52);
+      transform: scale(1.06);
+    }
+
+    .camera-fab:active { transform: scale(0.94); }
+
+    /* Swipe hint */
+    .swipe-hint {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #9AA0A6;
+      margin-top: -8px;
+    }
+
+    /* Delete state */
+    .action-btn.delete-btn:hover {
+      border-color: #EA4335;
+      color: #EA4335;
+      background: #FCE8E6;
+    }
+
+    /* ── Dots ── */
+    .dots-row {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #E8EAED;
+      transition: all 0.25s;
+    }
+
+    .dot.done { background: #34A853; }
+
+    .dot.active {
+      background: #F9AB00;
+      transform: scale(1.4);
+      box-shadow: 0 0 6px rgba(249,171,0,0.5);
+    }
+
+    /* ── Navigation row ── */
+    .nav-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-nav-next {
+      flex: 1;
+      background: linear-gradient(130deg, #1557C9 0%, #1A73E8 45%, #34A853 100%);
+      color: #fff;
+      border: none;
+      border-radius: 28px;
+      padding: 14px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 14px rgba(26,115,232,0.3);
+      gap: 6px;
+    }
+
+    .btn-nav-next:hover { background: #1E8E3E; }
+    .btn-nav-next:active { transform: scale(0.98); }
+
+    .btn-nav-prev {
+      background: #fff;
+      color: #5F6368;
+      border: 1.5px solid #E8EAED;
+      border-radius: 28px;
+      padding: 14px 20px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-nav-prev:hover { border-color: #34A853; color: #34A853; }
+
+    input[type="file"] { display: none; }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: #202124;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── App Bottom Nav — mobile only ── */
+    .app-mob-nav {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 58px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid #E8EAED;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 200;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.06);
+    }
+
+    .app-mob-nav a {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 2px;
+      text-decoration: none;
+      font-size: 0.6rem; font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      padding: 5px 14px;
+      color: #9AA0A6;
+    }
+
+    .app-mob-nav a.active { color: #1A73E8; font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .app-mob-nav { display: flex; }
+    }
+
+    @media (max-width: 500px) {
+      .page-body { padding: 76px 12px 80px; gap: 14px; }
+      .step-card { padding: 18px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="top-nav" style="border-bottom: 2px solid transparent; border-image: linear-gradient(90deg, #1557C9, #1A73E8, #34A853) 1;">
+  <button class="nav-back" onclick="prevStep()" title="मागे">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M19 12H5"/><path d="M12 5l-7 7 7 7"/>
+    </svg>
+  </button>
+  <div style="display:flex;align-items:center;gap:10px;flex:1;overflow:hidden;">
+    <a href="../index.html" title="Home"><img src="../assets/images/logo.png" alt="MapFarmer" style="height:38px;width:auto;object-fit:contain;display:block;"></a>
+    <span class="nav-title" id="nav-title">नांगरणी</span>
+  </div>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <!-- Language Dropdown -->
+    <div class="app-lang-wrap" id="langWrap">
+      <svg class="alw-globe" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <select id="langSelect" aria-label="Select Language" onchange="changeLang(this.value)">
+        <option value="en">English</option>
+        <option value="mr" selected>मराठी</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+      <svg class="alw-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <span class="nav-progress-text" id="nav-prog">1 / 10</span>
+  </div>
+</nav>
+<div class="nav-progress-bar">
+  <div class="nav-progress-fill" id="progress-fill" style="width: 10%"></div>
+</div>
+
+<div class="page-body">
+
+  <!-- Step card -->
+  <div class="step-card">
+
+    <div class="step-header">
+      <span class="step-number-chip" id="step-badge">1 / 10</span>
+      <span class="step-name" id="step-title">नांगरणी</span>
+    </div>
+
+    <!-- Image box -->
+    <div class="img-box" id="img-box">
+      <div class="img-placeholder" id="img-placeholder">
+        <div class="placeholder-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9AA0A6" stroke-width="1.8" stroke-linecap="round">
+            <rect x="2" y="6" width="20" height="15" rx="3"/>
+            <circle cx="12" cy="13" r="3.5"/>
+            <path d="M8 6l1.5-3h5L16 6"/>
+          </svg>
+        </div>
+        <span class="placeholder-text">फोटो नाही — camera बटण दाबा</span>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="action-row">
+      <button class="action-btn delete-btn" onclick="deletePhoto()" title="फोटो काढा">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14H6L5 6"/>
+          <path d="M10 11v6M14 11v6"/>
+          <path d="M9 6V4h6v2"/>
+        </svg>
+      </button>
+
+      <button class="camera-fab" onclick="triggerCamera()" title="फोटो घ्या">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <rect x="2" y="6" width="20" height="15" rx="3"/>
+          <circle cx="12" cy="13" r="3.5"/>
+          <path d="M8 6l1.5-3h5L16 6"/>
+        </svg>
+      </button>
+
+      <button class="action-btn" onclick="nextStep()" title="पुढे">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="swipe-hint" id="swipe-hint">← swipe to change step →</div>
+
+    <input type="file" id="file-input" accept="image/*" capture="environment" onchange="handleUpload(event)">
+
+    <!-- Dots -->
+    <div class="dots-row" id="dots"></div>
+
+    <!-- Nav buttons -->
+    <div class="nav-row">
+      <button class="btn-nav-prev" onclick="prevStep()" id="prev-btn">← मागे</button>
+      <button class="btn-nav-next" id="next-btn" onclick="nextStep()">
+        पुढे
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ── App Bottom Nav — mobile only ── -->
+<nav class="app-mob-nav">
+  <a href="home.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;color:#9AA0A6;text-decoration:none;font-size:0.6rem;font-weight:600;font-family:'Poppins',sans-serif;padding:5px 14px;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+    <span>होम</span>
+  </a>
+  <a href="capture.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;color:#1A73E8;text-decoration:none;font-size:0.6rem;font-weight:700;font-family:'Poppins',sans-serif;padding:5px 14px;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A73E8" stroke-width="2.2" stroke-linecap="round"><rect x="2" y="6" width="20" height="15" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-3h5L16 6"/></svg>
+    <span>फोटो</span>
+  </a>
+  <a href="view.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;color:#9AA0A6;text-decoration:none;font-size:0.6rem;font-weight:600;font-family:'Poppins',sans-serif;padding:5px 14px;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>गॅलरी</span>
+  </a>
+  <a href="instructions.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;color:#9AA0A6;text-decoration:none;font-size:0.6rem;font-weight:600;font-family:'Poppins',sans-serif;padding:5px 14px;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span>माहिती</span>
+  </a>
+</nav>
+
+<div id="toast" class="google-toast"></div>
+
+<script src="../js/config.js"></script>
+<script src="../js/state.js"></script>
+<script src="../js/utils.js"></script>
+<script>
+  if (!isLoggedIn()) { window.location.href = 'login.html'; }
+
+  // Check URL query param: e.g. capture.html?step=2
+  var params = new URLSearchParams(window.location.search);
+  var paramStep = params.get('step');
+  if (paramStep !== null && !isNaN(paramStep)) {
+    var stepNum = parseInt(paramStep, 10);
+    if (stepNum >= 0 && stepNum < 10) {
+      state.currentStep = stepNum;
+      saveState();
+    }
+  }
+
+  function updateUI() {
+    var i = state.currentStep;
+    var step = STEPS[i];
+    var lang = state.lang || 'mr';
+    var t = I18N[lang] || I18N.mr;
+    var name = step[lang] || step.mr;
+    var pct = Math.round(((i + 1) / 10) * 100);
+
+    document.getElementById('nav-title').textContent = step.emoji + ' ' + name;
+    document.getElementById('nav-prog').textContent = (i + 1) + ' / 10';
+    document.getElementById('step-title').textContent = step.emoji + ' ' + name;
+    document.getElementById('step-badge').textContent = (i + 1) + ' / 10';
+    document.getElementById('progress-fill').style.width = pct + '%';
+
+    var nextLabels = { mr: 'पुढे', en: 'Next', hi: 'आगे' };
+    var prevLabels = { mr: '← मागे', en: '← Back', hi: '← पीछे' };
+    var completeLabels = { mr: 'पूर्ण करा', en: 'Complete', hi: 'पूर्ण करें' };
+
+    var prevBtn = document.getElementById('prev-btn');
+    if (prevBtn) prevBtn.textContent = prevLabels[lang] || prevLabels.mr;
+
+    var nextBtn = document.getElementById('next-btn');
+    if (nextBtn) {
+      nextBtn.innerHTML = i === 9
+        ? (completeLabels[lang] || 'पूर्ण करा') + ' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>'
+        : (nextLabels[lang] || 'पुढे') + ' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    }
+
+    var dots = document.getElementById('dots');
+    dots.innerHTML = STEPS.map(function(_, idx) {
+      var cls = idx < i ? 'done' : (idx === i ? 'active' : '');
+      return '<div class="dot ' + cls + '" onclick="jumpToStep(' + idx + ')" style="cursor:pointer;" title="Step ' + (idx + 1) + '"></div>';
+    }).join('');
+
+    var imgBox = document.getElementById('img-box');
+    var photo = state.stepPhotos[i];
+    var noPhotoText = { mr: 'फोटो नाही — कॅमेरा बटण दाबा', en: 'No photo — tap Camera button', hi: 'फोटो नहीं — कैमरा बटन दबाएं' };
+
+    if (photo) {
+      imgBox.innerHTML = '<img src="' + photo + '" alt="' + name + '" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">';
+    } else {
+      imgBox.innerHTML =
+        '<div class="img-placeholder" style="background:' + step.bg + '">' +
+        '<div class="placeholder-icon" style="background:rgba(255,255,255,0.25)">' +
+        '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="6" width="20" height="15" rx="3"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-3h5L16 6"/></svg>' +
+        '</div>' +
+        '<span style="color:rgba(255,255,255,0.95);font-size:.85rem;font-weight:600">' + (noPhotoText[lang] || noPhotoText.mr) + '</span>' +
+        '</div>';
+    }
+  }
+
+  function jumpToStep(idx) {
+    if (idx >= 0 && idx < 10) {
+      state.currentStep = idx;
+      saveState();
+      updateUI();
+    }
+  }
+
+  function nextStep() {
+    if (state.currentStep < 9) {
+      state.currentStep++;
+      saveState();
+      updateUI();
+    } else {
+      window.location.href = 'complete.html';
+    }
+  }
+
+  function prevStep() {
+    if (state.currentStep > 0) {
+      state.currentStep--;
+      saveState();
+      updateUI();
+    } else {
+      window.location.href = 'home.html';
+    }
+  }
+
+  function triggerCamera() {
+    document.getElementById('file-input').click();
+  }
+
+  function handleUpload(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var lang = state.lang || 'mr';
+    var okMsg = { mr: 'फोटो सेव्ह झाला! ✅', en: 'Photo saved! ✅', hi: 'फोटो सुरक्षित हुआ! ✅' };
+    var errMsg = { mr: 'फोटो खूप मोठा आहे, परत प्रयत्न करा', en: 'Photo too large, try again', hi: 'फोटो बहुत बड़ा है, दोबारा प्रयास करें' };
+
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      var img = new Image();
+      img.onload = function() {
+        /* Compress: resize max 1024px, JPEG quality 0.72 */
+        var MAX = 1024;
+        var w = img.width, h = img.height;
+        if (w > MAX || h > MAX) {
+          var ratio = Math.min(MAX / w, MAX / h);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+        }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        var compressed = canvas.toDataURL('image/jpeg', 0.72);
+        try {
+          state.stepPhotos[state.currentStep] = compressed;
+          saveState();
+          updateUI();
+          showToast(okMsg[lang] || okMsg.mr, 'success');
+        } catch(ex) {
+          showToast(errMsg[lang] || errMsg.mr, 'error');
+        }
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  }
+
+  function deletePhoto() {
+    var lang = state.lang || 'mr';
+    var noPhotoMsg = { mr: 'कोणताही फोटो नाही', en: 'No photo to delete', hi: 'कोई फोटो नहीं है' };
+    var delMsg = { mr: 'फोटो काढला गेला', en: 'Photo removed', hi: 'फोटो हटा दिया गया' };
+
+    if (!state.stepPhotos[state.currentStep]) { 
+      showToast(noPhotoMsg[lang] || noPhotoMsg.mr, 'error'); 
+      return; 
+    }
+    state.stepPhotos[state.currentStep] = null;
+    saveState();
+    updateUI();
+    showToast(delMsg[lang] || delMsg.mr, 'info');
+  }
+
+  applyLang();
+  updateUI();
+
+  window.addEventListener('languageChanged', function() {
+    updateUI();
+    setSwipeHint();
+  });
+
+  /* ── Swipe gesture (left = next, right = prev) ── */
+  var touchStartX = 0, touchStartY = 0;
+  var card = document.querySelector('.step-card');
+  if (card) {
+    card.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+
+    card.addEventListener('touchend', function(e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) nextStep();
+        else prevStep();
+      }
+    }, { passive: true });
+  }
+
+  function setSwipeHint() {
+    var lang = state.lang || 'mr';
+    var hints = {
+      mr: '← पुढील / मागील टप्प्यासाठी स्वाइप करा →',
+      en: '← swipe to change step →',
+      hi: '← स्टेप बदलने के लिए स्वाइप करें →'
+    };
+    var el = document.getElementById('swipe-hint');
+    if (el) el.textContent = hints[lang] || hints.mr;
+  }
+  setSwipeHint();
+</script>
+</body>
+</html>

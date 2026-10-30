@@ -1,0 +1,136 @@
+/* ============================================================
+   FARMER APP — Google Material Design 3 Tokens
+   Google color psychology: green=growth, blue=trust, amber=energy
+   ============================================================ */
+
+:root {
+  /* ── Primary: Google Green (#34A853) ── */
+  --primary: #34A853;
+  --primary-dark: #1E8E3E;
+  --primary-deep: #137333;
+  --primary-light: #66BB6A;
+  --primary-pale: #E8F5E9;
+  --primary-glow: rgba(52, 168, 83, 0.28);
+
+  /* ── Secondary: Google Blue (trust, info) ── */
+  --blue: #1A73E8;
+  --blue-dark: #1557B0;
+  --blue-light: #4285F4;
+  --blue-pale: #E8F0FE;
+
+  /* ── CTA/Energy: Google Amber (#F9AB00) ── */
+  --accent: #F9AB00;
+  --accent-dark: #F57F17;
+  --accent-light: #FFF3E0;
+  --accent-glow: rgba(249, 171, 0, 0.3);
+
+  /* ── Error: Google Red ── */
+  --error: #EA4335;
+  --error-pale: #FCE8E6;
+
+  /* ── Surfaces (Google's clean whites) ── */
+  --bg: #F8F9FA;
+  --bg-alt: #FAFAFA;
+  --surface: #FFFFFF;
+  --card: #FFFFFF;
+
+  /* ── Typography (Google's dark tone) ── */
+  --text: #202124;
+  --text-secondary: #5F6368;
+  --text-muted: #9AA0A6;
+
+  /* ── Borders (Google's subtle gray) ── */
+  --border: #E8EAED;
+  --border-light: #F1F3F4;
+  --border-focus: #34A853;
+
+  /* ── Shadows (Google-style elevation) ── */
+  --shadow-xs:  0 1px 2px rgba(60,64,67,0.04);
+  --shadow-sm:  0 1px 3px rgba(60,64,67,0.06), 0 1px 2px rgba(60,64,67,0.04);
+  --shadow-md:  0 2px 8px rgba(60,64,67,0.08), 0 1px 3px rgba(60,64,67,0.05);
+  --shadow-lg:  0 4px 16px rgba(60,64,67,0.10), 0 2px 6px rgba(60,64,67,0.06);
+  --shadow-xl:  0 8px 40px rgba(60,64,67,0.14);
+  --shadow-green: 0 4px 16px rgba(52,168,83,0.28);
+  --shadow-blue:  0 4px 16px rgba(26,115,232,0.28);
+  --shadow-orange: 0 4px 16px rgba(249,171,0,0.32);
+  --shadow-glow: 0 0 32px rgba(52,168,83,0.14);
+
+  /* ── Shape (Google M3 scale) ── */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 999px;
+
+  /* ── Fonts ── */
+  --font-body: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  --font-ui: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+
+  /* ── Nav height ── */
+  --nav-height: 64px;
+
+  color-scheme: light;
+}
+
+/* ── Legacy aliases (backward compatibility) ── */
+:root {
+  --primary-dark: #1E8E3E;
+  --sky: #1A73E8;
+  --sky-light: #E8F0FE;
+  --golden: #F9AB00;
+  --golden-light: #FFF3E0;
+  --coral: #EA4335;
+  --coral-light: #FCE8E6;
+  --lime: #8BC34A;
+  --lime-light: #F1F8E9;
+  --earth: #78716C;
+  --earth-dark: #44403C;
+  --earth-light: #D6D3D1;
+  --bg-alt: #FAFAFA;
+  --bg-warm: #FFFBF0;
+  --border-green: #A5D6A7;
+  --border-light: #F1F3F4;
+  --accent-dark: #F57F17;
+  --accent-pale: #FFF3E0;
+  --primary-deep: #137333;
+  --primary-light: #66BB6A;
+}
+
+/* ── Dark Mode (Google dark surface) ── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1C1B1F;
+    --bg-alt: #2D2C31;
+    --surface: #2D2C31;
+    --card: #36343B;
+    --text: #E6E1E5;
+    --text-secondary: #CAC4D0;
+    --text-muted: #938F99;
+    --border: #49454F;
+    --border-light: #3B383E;
+    --primary-pale: #1B3A27;
+    --blue-pale: #1A2845;
+    --accent-light: #3A2B0A;
+    --error-pale: #370C08;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #1C1B1F;
+  --bg-alt: #2D2C31;
+  --surface: #2D2C31;
+  --card: #36343B;
+  --text: #E6E1E5;
+  --text-secondary: #CAC4D0;
+  --text-muted: #938F99;
+  --border: #49454F;
+  --border-light: #3B383E;
+  --primary-pale: #1B3A27;
+  --blue-pale: #1A2845;
+  --accent-light: #3A2B0A;
+  --error-pale: #370C08;
+  color-scheme: dark;
+}
