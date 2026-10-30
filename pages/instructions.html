@@ -52,7 +52,8 @@
 
     @media (max-width: 640px) {
       .top-nav { padding: 0 12px; height: 56px; gap: 8px; }
-      .nav-brand img { height: 38px !important; }
+      /* Icon-only logo on mobile */
+      .nav-brand img { height: 44px !important; width: 44px !important; object-fit: cover; object-position: left center; border-radius: 10px; }
       .app-lang-wrap { padding: 4px 8px; }
       .app-lang-wrap select { min-width: 54px; font-size: 0.78rem; }
     }

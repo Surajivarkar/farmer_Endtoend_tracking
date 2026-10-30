@@ -88,6 +88,8 @@
       .top-nav { padding: 0 10px; height: 54px; gap: 6px; }
       .nav-title { font-size: 0.82rem; }
       .nav-back { width: 36px; height: 36px; }
+      /* Icon-only logo on mobile */
+      .nav-logo { height: 44px !important; width: 44px !important; object-fit: cover !important; object-position: left center; border-radius: 10px; }
       .app-lang-wrap { padding: 4px 8px; }
       .app-lang-wrap select { min-width: 54px; font-size: 0.78rem; }
       .nav-progress-bar { top: 54px; }
@@ -390,7 +392,7 @@
     </svg>
   </button>
   <div style="display:flex;align-items:center;gap:10px;flex:1;overflow:hidden;">
-    <a href="../index.html" title="Home"><img src="../assets/images/logo.png" alt="MapFarmer" style="height:38px;width:auto;object-fit:contain;display:block;"></a>
+    <a href="../index.html" title="Home"><img src="../assets/images/logo.png" alt="MapFarmer" class="nav-logo" style="height:44px;width:auto;object-fit:contain;display:block;"></a>
     <span class="nav-title" id="nav-title">नांगरणी</span>
   </div>
   <div style="display:flex; align-items:center; gap:10px;">

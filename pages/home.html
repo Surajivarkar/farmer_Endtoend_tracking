@@ -103,8 +103,14 @@
     @media (max-width: 640px) {
       .top-nav { padding: 0 14px; height: 60px; position: sticky; }
 
-      /* Shrink logo */
-      .nav-brand img { height: 40px !important; }
+      /* Icon-only logo on mobile — crop left (symbol) portion */
+      .nav-brand img {
+        height: 44px !important;
+        width: 44px !important;
+        object-fit: cover;
+        object-position: left center;
+        border-radius: 10px;
+      }
 
       /* Nav-user: avatar only, no name text */
       .nav-user {

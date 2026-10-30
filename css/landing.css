@@ -1967,7 +1967,7 @@
 }
 
 @media (max-width: 480px) {
-  .nav-logo-img { height: 42px; }
+  .nav-logo-img { height: 44px; width: 44px; object-fit: cover; object-position: left center; border-radius: 10px; }
   .hero { padding-block: 30px 24px; }
   .hero-card-img-wrap { height: 210px; }
 

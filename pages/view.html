@@ -85,7 +85,8 @@
 
     @media (max-width: 640px) {
       .top-nav { padding: 0 12px; height: 56px; gap: 8px; }
-      .nav-brand img { height: 38px !important; }
+      /* Icon-only logo on mobile */
+      .nav-brand img { height: 44px !important; width: 44px !important; object-fit: cover; object-position: left center; border-radius: 10px; }
       .nav-action-btn .btn-txt { display: none; }
       .nav-action-btn { padding: 8px 10px; gap: 0; border-radius: 50%; width: 36px; height: 36px; justify-content: center; }
       .app-lang-wrap { padding: 4px 8px; }
